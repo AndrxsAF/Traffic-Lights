@@ -1,83 +1,84 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Lights from "./lights.jsx";
 import Button from "react-bootstrap/Button";
 
 //create your first component
 const Home = () => {
-	const [color, setColor] = useState({
-		red: "",
-		yellow: "",
-		green: "",
-		purple: "",
-	});
+	const [color, setColor] = useState({});
 
-	const HandleClick = (event) => {
-		const newColors = {
-			[event.target.id]: `selected-${event.target.id}`,
-		};
-		setColor(newColors);
+	const handleClick = (event) => {
+		if (color[event.target.id] == `selected-${event.target.id}`) {
+			const newColors = {
+				[event.target.id]: "",
+			};
+			setColor(newColors);
+		} else {
+			const newColors = {
+				[event.target.id]: `selected-${event.target.id}`,
+			};
+			setColor(newColors);
+		}
 	};
+
+	console.log(color);
 
 	const [displayToggle, setDisplayToggle] = useState("d-none");
 	const displayPurple = () => {
 		setDisplayToggle(displayToggle == "d-none" ? "block" : "d-none");
 	};
 
-	const [cycle, setCycle] = useState({
-		red: "",
-		yellow: "",
-		green: "",
-		purple: "",
-	});
+	// const cycle = (light) => {
+	// 	setTimeout(() => {
+	// 		let newColors = {
+	// 			[light]: `selected-${light}`,
+	// 		};
+	// 		setColor(newColors);
+	// 		console.log(light);
+	// 	}, 2000);
+	// };
 
-	const toggleCycle = () => {
-		let i = 0;
-		setInterval(() => {
-			const colors = Object.keys(cycle);
-			cycle[colors[i]] = `selected-${colors[i]}`;
-			if (i > 0) {
-				cycle[colors[i - 1]] = "";
-				i == 3 ? (i = 0) : i++;
-			} else if (i == 0) {
-				cycle[colors[3]] = "";
-				i++;
-			}
-			console.log(cycle);
-			setCycle(cycle);
-		}, 1000);
-	};
+	// const toggleCycle = () => {
+	// 	cycle("red");
+	// 	cycle("yellow");
+	// 	cycle("green");
+	// 	cycle("purple");
+	// };
+
+	console.log({ color });
 
 	return (
 		<div className="container-fluid d-flex flex-column align-items-center">
 			<div className="TrafficHead"></div>
-			<div
-				id="trafficLight"
-				onClick={HandleClick}
-				className="TrafficBody p-4">
-				<Lights color="red" class={color.red} cycleClass={cycle.red} />
+			<div id="trafficLight" className="TrafficBody p-4">
 				<Lights
+					handleClick={handleClick}
+					color="red"
+					class={color.red}
+				/>
+				<Lights
+					handleClick={handleClick}
 					color="yellow"
 					class={color.yellow}
-					cycleClass={cycle.yellow}
 				/>
 				<Lights
+					handleClick={handleClick}
 					color="green"
 					class={color.green}
-					cycleClass={cycle.green}
 				/>
 				<Lights
+					handleClick={handleClick}
 					color="purple"
 					class={color.purple}
-					cycleClass={cycle.purple}
-					display={displayToggle}></Lights>
+					display={displayToggle}
+				/>
 			</div>
 			<div className="m-4">
 				<Button onClick={displayPurple} variant="outline-secondary">
 					Add Purple
 				</Button>{" "}
-				<Button onClick={toggleCycle} variant="outline-secondary">
+				{/* <Button onClick={toggleCycle} variant="outline-secondary">
 					Cycle Lights
-				</Button>
+				</Button> */}
 			</div>
 		</div>
 	);
