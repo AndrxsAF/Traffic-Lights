@@ -6,7 +6,7 @@ const Lights = (props) => {
 		<div
 			onClick={(e) => props.handleClick(e)}
 			id={props.color}
-			className={`${props.color} light ${props.class} ${props.cycleClass} ${props.display}`}></div>
+			className={`${props.color} light ${props.class} ${props.display}`}></div>
 	);
 };
 
